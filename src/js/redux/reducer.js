@@ -14,6 +14,7 @@ import {
 } from './googleaction';
 
 import { Map, List } from 'immutable';
+import { ZOOM_IN } from './editoractions';
 
 
 export const initialState = Map({
@@ -94,7 +95,6 @@ function DMNEditorApp(state = initialState, action) {
                     .set('fileinfo', action.fileinfo)
                 );
             break;
-
         default:
             break;
     }

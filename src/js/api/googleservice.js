@@ -19,6 +19,8 @@ import {
 } from '../redux/googleaction';
 import DriveAppsUtil from 'drive-apps-util';
 
+let driveAppsUtil;
+
 export function initGoogle(options) {
     store.dispatch(createGoogleInitAction(options));
     driveAppsUtil = new DriveAppsUtil(options);
@@ -63,4 +65,20 @@ export function loadGoogleDocument(id, isNew) {
                 store.dispatch(createGoogleLoadDocumentErrorAction(error));
             });
     }
+}
+
+
+export function saveDocument(content) {
+    let googleDocument = store.getState().get('googleDocument');
+    store.dispatch(createGoogleSaveDocumentAction());
+    let metadata = JSON.stringify({
+        name: googleDocument.get('fileinfo').name,
+        mimeType: "application/dmn+xml",
+    });
+
+    driveAppsUtil.updateDocument(googleDocument.get('id'), metadata, content).then((fileinfo) => {
+        store.dispatch(createGoogleSaveDocumentSuccessAction(fileinfo));
+    }, (error) => {
+        store.dispatch(createGoogleSaveDocumentErrorAction(error));
+    });
 }

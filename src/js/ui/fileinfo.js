@@ -1,4 +1,4 @@
-import { changeFileName } from "../api/service";
+//import { changeFileName } from "../api/service";
 
 export function setDocumentInfo(name) {
     document.getElementById('docinfo').value = name;
